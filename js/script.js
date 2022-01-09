@@ -12,15 +12,6 @@ window.addEventListener('DOMContentLoaded', () => {
 
     // getResource('https://rickandmortyapi.com/api/character/')
     //     .then(data => createCharacter(data));
-
-    Promise.all([
-        getResource('https://rickandmortyapi.com/api/character/'),
-        getResource('https://rickandmortyapi.com/api/character/?page=2')
-    ])
-    .then(data2 => {
-        console.log(data2);
-    })
-    .then((data2) => createCharacter(data2));
     
     Promise.all([
         getResource('https://rickandmortyapi.com/api/episode'),
@@ -74,9 +65,4 @@ window.addEventListener('DOMContentLoaded', () => {
     function createEpisode(data) {
         parseEpisode(data);
     }
-
-    function createCharacter(data) {
-        parseCharacter(data);
-    }
-
 });

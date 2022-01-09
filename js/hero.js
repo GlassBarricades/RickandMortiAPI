@@ -1,6 +1,6 @@
 window.addEventListener('DOMContentLoaded', () => {
 
-    const getResource = async(url) => {
+    const getResource = async (url) => {
         const res = await fetch(url);
 
         if (!res.ok) {
@@ -14,9 +14,6 @@ window.addEventListener('DOMContentLoaded', () => {
         let arr = data.slice(start, count);
         return arr;
     };
-
-    // getResource('https://rickandmortyapi.com/api/character/')
-    //     .then(data => createCharacter(data));
 
     Promise.all([
             getResource('https://rickandmortyapi.com/api/character/'),
@@ -42,6 +39,25 @@ window.addEventListener('DOMContentLoaded', () => {
             getResource('https://rickandmortyapi.com/api/character/?page=21'),
             getResource('https://rickandmortyapi.com/api/character/?page=22'),
             getResource('https://rickandmortyapi.com/api/character/?page=23'),
+            getResource('https://rickandmortyapi.com/api/character/?page=24'),
+            getResource('https://rickandmortyapi.com/api/character/?page=25'),
+            getResource('https://rickandmortyapi.com/api/character/?page=26'),
+            getResource('https://rickandmortyapi.com/api/character/?page=27'),
+            getResource('https://rickandmortyapi.com/api/character/?page=28'),
+            getResource('https://rickandmortyapi.com/api/character/?page=29'),
+            getResource('https://rickandmortyapi.com/api/character/?page=30'),
+            getResource('https://rickandmortyapi.com/api/character/?page=31'),
+            getResource('https://rickandmortyapi.com/api/character/?page=32'),
+            getResource('https://rickandmortyapi.com/api/character/?page=33'),
+            getResource('https://rickandmortyapi.com/api/character/?page=34'),
+            getResource('https://rickandmortyapi.com/api/character/?page=35'),
+            getResource('https://rickandmortyapi.com/api/character/?page=36'),
+            getResource('https://rickandmortyapi.com/api/character/?page=37'),
+            getResource('https://rickandmortyapi.com/api/character/?page=38'),
+            getResource('https://rickandmortyapi.com/api/character/?page=39'),
+            getResource('https://rickandmortyapi.com/api/character/?page=40'),
+            getResource('https://rickandmortyapi.com/api/character/?page=41'),
+            getResource('https://rickandmortyapi.com/api/character/?page=42'),
 
         ])
         .then(data2 => {
@@ -51,7 +67,6 @@ window.addEventListener('DOMContentLoaded', () => {
                 arr.push(item.results);
             });
             return arr;
-
         })
         .then((data3) => {
             let res = data3.reduce((sum, current) => {
@@ -60,13 +75,35 @@ window.addEventListener('DOMContentLoaded', () => {
             });
             return res;
         })
-        .then((data) => createCharacter(data));
+        .then((data) => createCharacter(data))
 
+    const checkBoxFilter = document.querySelector('.form-select');
+
+    const filterData = function (data) {
+        console.log(data);
+        checkBoxFilter.addEventListener('input', (data) => {
+            if (checkBoxFilter.value === 'Все') {
+                console.log('Все')
+            } else if (checkBoxFilter.value === 'Люди') {
+                console.log(data);
+                console.log('Люди')
+            } else if (checkBoxFilter.value === 'Мертвые') {
+                console.log('Мертвые')
+            } else if (checkBoxFilter.value === 'Живые') {
+                console.log('Живые')
+            }
+    })
+    }
 
     function parseCharacter(data) {
         // let dataSlice = data.slice(0, 20);
-        let dataSlice = arrSlice(0, 20, data);
-        dataSlice.forEach((item, i) => {
+        // let dataSlice = arrSlice(0, 20, data);
+        let data2 = data.filter((item) => {
+            if (checkBoxFilter.value === 'Все' && item.status === 'Dead') {
+                return true;
+            }
+        });
+        data2.forEach((item, i) => {
             const element = document.createElement('div');
             element.classList.add('col-md-3')
             element.innerHTML = `
@@ -93,6 +130,8 @@ window.addEventListener('DOMContentLoaded', () => {
             document.querySelector('.app2').append(element);
         });
     }
+
+
 
     function createCharacter(data) {
         parseCharacter(data);
